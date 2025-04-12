@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 
 # id (primary key - automático)
 # first_name (string), last_name (string), phone (string)
@@ -10,6 +12,12 @@ from django.utils import timezone
 # picture (imagem)
 
 class Category(models.Model):
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+
     name = models.CharField(max_length=50)
 
     def __str__(self) -> str:
@@ -28,7 +36,13 @@ class Contact(models.Model):
         Category,
         on_delete = models.SET_NULL,
         blank=True, null=True 
-    ) 
+    )
+
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        blank=True, null=True
+    )
     
 
     def __str__(self) -> str:
